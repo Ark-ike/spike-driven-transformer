@@ -1,0 +1,6 @@
+name: sdt
+
+num_layers: 8
+num_heads: 8
+num_ceils: 8
+num_channels: 512

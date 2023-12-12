@@ -1,0 +1,21 @@
+defaults:
+    - dataset: cifar10
+    - model: medium
+    - override hydra/hydra_logging: none
+    - override hydra/job_logging: none
+
+checkpoint: ./checkpoint/training_${now:%Y%m%d%H%M%S}
+device: gpu
+
+batch_size: 16
+num_workers: 16
+learning_rate: 0.001
+
+num_epochs: 100
+save_interval: 10
+
+hydra:
+    run:
+        dir: ${checkpoint}
+    sweep:
+        dir: ${checkpoint}

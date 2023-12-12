@@ -1,0 +1,6 @@
+name: cifar10
+path: ./dataset/cifar10
+
+time_steps: 4
+in_channels: 3
+num_classes: 10
