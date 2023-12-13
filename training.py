@@ -31,7 +31,7 @@ def main(config):
     print(OmegaConf.to_yaml(config))
 
     # create model
-    model = SpikingTransformer(time_steps=config.dataset.time_steps, in_channels=config.dataset.in_channels, num_classes=config.dataset.num_classes, num_layers=config.model.num_layers, num_heads=config.model.num_heads, num_ceils=config.model.num_ceils, num_channels=config.model.num_channels).to(device)
+    model = SpikingTransformer(in_channels=config.dataset.in_channels, image_size=config.dataset.image_size, num_classes=config.dataset.num_classes, num_layers=config.model.num_layers, num_heads=config.model.num_heads, num_channels=config.model.num_channels).to(device)
     functional.set_step_mode(model, 'm')
 
     # create optimizer
@@ -40,7 +40,7 @@ def main(config):
     scheduler = CosineAnnealingLR(optimizer, T_max=config.save_interval)
 
     # load dataset
-    dataset_train, dataset_test = create_dataset(config.dataset.name, config.dataset.path)
+    dataset_train, dataset_test = create_dataset(config.dataset)
     loader_train = DataLoader(dataset_train, batch_size=config.batch_size, shuffle=True, num_workers=config.num_workers, pin_memory=True)
     loader_test = DataLoader(dataset_test, batch_size=config.batch_size, shuffle=False, num_workers=config.num_workers, pin_memory=True)
     print('train dataset: {} samples, test dataset: {} samples\n'.format(len(dataset_train), len(dataset_test)))

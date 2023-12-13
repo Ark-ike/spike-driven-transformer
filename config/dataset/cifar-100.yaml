@@ -1,0 +1,7 @@
+name: cifar-100
+path: ./dataset/cifar-100
+
+time_steps: 4
+in_channels: 3
+image_size: 32
+num_classes: 100

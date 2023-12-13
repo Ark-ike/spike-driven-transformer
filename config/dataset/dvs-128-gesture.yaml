@@ -1,0 +1,7 @@
+name: dvs-128-gesture
+path: ./dataset/dvs-128-gesture
+
+time_steps: 16
+in_channels: 2
+image_size: 128
+num_classes: 11

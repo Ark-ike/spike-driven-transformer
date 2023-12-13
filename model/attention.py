@@ -1,24 +1,20 @@
 from torch import nn
 from einops.layers.torch import Rearrange, Reduce
-from spikingjelly.activation_based import neuron
+from spikingjelly.activation_based import layer, neuron
 
 
 class FeedForward(nn.Module):
-    def __init__(self, time_steps=16, in_channels=512, out_channels=512):
+    def __init__(self, in_channels=512, out_channels=512):
         super().__init__()
         self.feed_forward = nn.Sequential(
             # block 1
             neuron.LIFNode(detach_reset=True),
-            Rearrange('T B C H W -> (T B) C H W'),
-            nn.Conv2d(in_channels, in_channels * 4, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(in_channels * 4),
-            Rearrange('(T B) C H W -> T B C H W', T=time_steps),
+            layer.Conv2d(in_channels, in_channels * 4, 1, bias=False),
+            layer.BatchNorm2d(in_channels * 4),
             # block 2
             neuron.LIFNode(detach_reset=True),
-            Rearrange('T B C H W -> (T B) C H W'),
-            nn.Conv2d(in_channels * 4, out_channels, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(out_channels),
-            Rearrange('(T B) C H W -> T B C H W', T=time_steps)
+            layer.Conv2d(in_channels * 4, out_channels, 1, bias=False),
+            layer.BatchNorm2d(out_channels),
         )
 
     def forward(self, input):
@@ -27,29 +23,23 @@ class FeedForward(nn.Module):
 
 
 class SelfAttention(nn.Module):
-    def __init__(self, time_steps=16, num_heads=8, num_ceils=8, num_channels=512):
+    def __init__(self, num_heads=8, num_ceils=8, num_channels=512):
         super().__init__()
         self.make_query = nn.Sequential(
-            Rearrange('T B C H W -> (T B) C H W'),
-            nn.Conv2d(num_channels, num_channels, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(num_channels),
-            Rearrange('(T B) C H W -> T B C H W', T=time_steps),
+            layer.Conv2d(num_channels, num_channels, 1, bias=False),
+            layer.BatchNorm2d(num_channels),
             neuron.LIFNode(detach_reset=True),
             Rearrange('T B (K D) H W -> T B K (H W) D', K=num_heads)
         )
         self.make_key = nn.Sequential(
-            Rearrange('T B C H W -> (T B) C H W'),
-            nn.Conv2d(num_channels, num_channels, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(num_channels),
-            Rearrange('(T B) C H W -> T B C H W', T=time_steps),
+            layer.Conv2d(num_channels, num_channels, 1, bias=False),
+            layer.BatchNorm2d(num_channels),
             neuron.LIFNode(detach_reset=True),
             Rearrange('T B (K D) H W -> T B K (H W) D', K=num_heads)
         )
         self.make_value = nn.Sequential(
-            Rearrange('T B C H W -> (T B) C H W'),
-            nn.Conv2d(num_channels, num_channels, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(num_channels),
-            Rearrange('(T B) C H W -> T B C H W', T=time_steps),
+            layer.Conv2d(num_channels, num_channels, 1, bias=False),
+            layer.BatchNorm2d(num_channels),
             neuron.LIFNode(detach_reset=True),
             Rearrange('T B (K D) H W -> T B K (H W) D', K=num_heads)
         )
@@ -58,10 +48,9 @@ class SelfAttention(nn.Module):
             neuron.LIFNode(v_threshold=0.5, detach_reset=True),
         )
         self.make_output = nn.Sequential(
-            Rearrange('T B K (H W) D -> (T B) (K D) H W', H=num_ceils),
-            nn.Conv2d(num_channels, num_channels, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(num_channels),
-            Rearrange('(T B) C H W -> T B C H W', T=time_steps)
+            Rearrange('T B K (H W) D -> T B (K D) H W', H=num_ceils),
+            layer.Conv2d(num_channels, num_channels, 1, bias=False),
+            layer.BatchNorm2d(num_channels),
         )
 
     def forward(self, input):

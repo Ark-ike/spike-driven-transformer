@@ -18,6 +18,7 @@ To ensure the code runs correctly, following packages are required:
 
 * `python`
 * `hydra`
+* `einops`
 * `pytorch`
 * `spikingjelly`
 
@@ -36,11 +37,34 @@ You can install them following the instructions below.
     pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
     ```
 
-* Install `hydra` and `opencv`:
+* Install `hydra`, `einops` and `spikingjelly`:
   
     ```bash
     pip install hydra-core
+    pip install einops
     pip install spikingjelly
     ```
 
 Latest version is recommended for all the packages, but make sure that your CUDA version is compatible with your `pytorch`.
+
+## Experiments
+
+### CIFAR-10
+
+The CIFAR-10 dataset is supported by `torchvision`, which can be automatically downloaded. Run the following command for experiments on the CIFAR-10 dataset:
+
+```bash
+python training.py dataset=cifar-10 model=light
+```
+
+### CIFAR-100
+
+The CIFAR-100 dataset is also supported by `torchvision`. Run the following command for experiments on the CIFAR-100 dataset:
+
+```bash
+python training.py dataset=cifar-100 model=light
+```
+
+### CIFAR-10-DVS
+
+### DVS-128-Gesture

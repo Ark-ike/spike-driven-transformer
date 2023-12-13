@@ -1,15 +1,16 @@
 from torch import nn
 from einops.layers.torch import Reduce
+from spikingjelly.activation_based import layer, neuron
 
 from model.embedding import PatchEmbedding
 from model.attention import FeedForward, SelfAttention
 
 
 class EncoderBlock(nn.Module):
-    def __init__(self, time_steps=16, num_heads=8, num_ceils=8, num_channels=512):
+    def __init__(self, num_heads=8, num_ceils=8, num_channels=512):
         super().__init__()
-        self.self_attention = SelfAttention(time_steps, num_heads, num_ceils, num_channels)
-        self.feed_forward = FeedForward(time_steps, num_channels, num_channels)
+        self.self_attention = SelfAttention(num_heads, num_ceils, num_channels)
+        self.feed_forward = FeedForward(num_channels, num_channels)
 
     def forward(self, input):
         output = self.self_attention(input)
@@ -18,15 +19,16 @@ class EncoderBlock(nn.Module):
 
 
 class SpikingTransformer(nn.Module):
-    def __init__(self, time_steps=16, in_channels=2, num_classes=10, num_layers=8, num_heads=8, num_ceils=8, num_channels=512):
+    def __init__(self, in_channels=2, image_size=128, num_classes=10, num_layers=8, num_heads=8, num_channels=512):
         super().__init__()
-        self.patch_embedding = PatchEmbedding(time_steps, in_channels, num_channels)
+        self.patch_embedding = PatchEmbedding(in_channels, num_channels)
         self.encoder_block = nn.Sequential(
-            *[EncoderBlock(time_steps, num_heads, num_ceils, num_channels) for _ in range(num_layers)]
+            *[EncoderBlock(num_heads, image_size // 16, num_channels) for _ in range(num_layers)]
         )
         self.classifier_head = nn.Sequential(
             Reduce('T B C H W -> T B C', 'mean'),
-            nn.Linear(num_channels, num_classes),
+            neuron.LIFNode(detach_reset=True),
+            layer.Linear(num_channels, num_classes),
             Reduce('T B C -> B C', 'mean')
         )
 
