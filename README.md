@@ -67,4 +67,20 @@ python training.py dataset=cifar-100 model=light
 
 ### CIFAR-10-DVS
 
+The CIFAR-10-DVS dataset is loaded by `spikingjelly` and can be automatically downloaded. Run the following command for experiments on the CIFAR-10-DVS dataset:
+
+```bash
+python training.py dataset=cifar-10-dvs model=light
+```
+
+Since neuromorphic datasets require larger time steps, a smaller batch size is recommended.
+
 ### DVS-128-Gesture
+
+The DVS-128-Gesture dataset is also loaded by `spikingjelly`, but you need to download the dataset manually. Run the following command for experiments on the DVS-128-Gesture dataset:
+
+```bash
+python training.py dataset=dvs-128-gesture model=light
+```
+
+It is likely that `spikingjelly` will raise an error at the first time you run the experiment. Follow the instructions to download the dataset correctly and try again. Similarly, a smaller batch size is recommended.
