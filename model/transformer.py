@@ -21,9 +21,11 @@ class EncoderBlock(nn.Module):
 class SpikingTransformer(nn.Module):
     def __init__(self, in_channels=2, image_size=128, num_classes=10, num_layers=8, num_heads=8, num_channels=512):
         super().__init__()
-        self.patch_embedding = PatchEmbedding(in_channels, num_channels)
+        num_poolings = 2 if image_size <= 32 else 3 if image_size <= 128 else 4
+        num_ceils = image_size // (2 ** num_poolings)
+        self.patch_embedding = PatchEmbedding(in_channels, num_channels, num_poolings)
         self.encoder_block = nn.Sequential(
-            *[EncoderBlock(num_heads, image_size // 16, num_channels) for _ in range(num_layers)]
+            *[EncoderBlock(num_heads, num_ceils, num_channels) for _ in range(num_layers)]
         )
         self.classifier_head = nn.Sequential(
             Reduce('T B C H W -> T B C', 'mean'),
