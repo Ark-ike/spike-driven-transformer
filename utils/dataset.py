@@ -42,8 +42,9 @@ def create_dataset(config):
         dataset_train = CIFAR100(config.path, train=True, transform=transform, download=True)
         dataset_test = CIFAR100(config.path, train=False, transform=transform, download=True)
     elif config.name == 'cifar-10-dvs':
+        os.makedirs(config.path, exist_ok=True)
         dataset = CIFAR10DVS(config.path, data_type='frame', frames_number=config.time_steps, split_by='number')
-        dataset_train, dataset_test = split_dataset(dataset)
+        dataset_train, dataset_test = split_dataset(dataset, num_classes=config.num_classes)
     elif config.name == 'dvs-128-gesture':
         os.makedirs(config.path, exist_ok=True)
         dataset_train = DVS128Gesture(config.path, train=True, data_type='frame', frames_number=config.time_steps, split_by='number')
