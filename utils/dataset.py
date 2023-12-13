@@ -1,3 +1,5 @@
+import os
+
 from torch.utils.data import Subset
 from torchvision import transforms
 from torchvision.datasets import CIFAR10, CIFAR100
@@ -42,7 +44,8 @@ def create_dataset(config):
     elif config.name == 'cifar-10-dvs':
         dataset = CIFAR10DVS(config.path, data_type='frame', frames_number=config.time_steps, split_by='number')
         dataset_train, dataset_test = split_dataset(dataset)
-    elif config.name == 'dvs_gesture':
+    elif config.name == 'dvs-128-gesture':
+        os.makedirs(config.path, exist_ok=True)
         dataset_train = DVS128Gesture(config.path, train=True, data_type='frame', frames_number=config.time_steps, split_by='number')
         dataset_test = DVS128Gesture(config.path, train=False, data_type='frame', frames_number=config.time_steps, split_by='number')
     return dataset_train, dataset_test
