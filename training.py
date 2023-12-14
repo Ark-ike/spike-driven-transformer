@@ -34,7 +34,7 @@ def main(config):
 
     # create optimizer
     criterion = CrossEntropyLoss()
-    optimizer = AdamW(model.parameters(), lr=experiment.learning_rate)
+    optimizer = AdamW(model.parameters(), lr=experiment.learning_rate, weight_decay=experiment.weight_decay)
     scheduler = create_scheduler(optimizer, experiment)
 
     # load dataset
