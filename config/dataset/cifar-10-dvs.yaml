@@ -1,7 +1,0 @@
-name: cifar-10-dvs
-path: ./dataset/cifar-10-dvs
-
-time_steps: 16
-in_channels: 2
-image_size: 128
-num_classes: 10

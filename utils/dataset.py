@@ -1,6 +1,6 @@
 import os
 
-from torch.utils.data import Subset
+from torch.utils.data import Subset, DataLoader
 from torchvision import transforms
 from torchvision.datasets import CIFAR10, CIFAR100
 from spikingjelly.datasets.cifar10_dvs import CIFAR10DVS
@@ -21,8 +21,6 @@ def split_dataset(dataset, train_ratio=0.9, num_classes=10):
     index_label = [[] for _ in range(num_classes)]
     for index, data in enumerate(dataset):
         _, label = data
-        # if isinstance(y, np.ndarray) or isinstance(y, torch.Tensor):
-        #     y = y.item()
         index_label[label].append(index)
     index_train, index_test = [], []
     for label in range(num_classes):
@@ -49,4 +47,6 @@ def create_dataset(config):
         os.makedirs(config.path, exist_ok=True)
         dataset_train = DVS128Gesture(config.path, train=True, data_type='frame', frames_number=config.time_steps, split_by='number')
         dataset_test = DVS128Gesture(config.path, train=False, data_type='frame', frames_number=config.time_steps, split_by='number')
-    return dataset_train, dataset_test
+    loader_train = DataLoader(dataset_train, batch_size=config.batch_size, shuffle=True, num_workers=config.num_workers, pin_memory=True)
+    loader_test = DataLoader(dataset_test, batch_size=config.batch_size, shuffle=False, num_workers=config.num_workers, pin_memory=True)
+    return dataset_train, dataset_test, loader_train, loader_test

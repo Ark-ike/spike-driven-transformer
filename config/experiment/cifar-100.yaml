@@ -1,0 +1,21 @@
+name: cifar-100
+path: ./dataset/cifar-100
+
+time_steps: 4
+in_channels: 3
+image_size: 32
+num_classes: 100
+
+num_layers: 2
+num_heads: 8
+num_channels: 512
+
+num_epochs: 300
+save_interval: 60
+batch_size: 32
+num_workers: 16
+
+learning_rate: 3e-4
+cycle_total: 50
+cycle_decay: 0.5
+cycle_warmup: 10

@@ -1,7 +1,0 @@
-name: cifar-10
-path: ./dataset/cifar-10
-
-time_steps: 4
-in_channels: 3
-image_size: 32
-num_classes: 10

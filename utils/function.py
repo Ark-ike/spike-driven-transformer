@@ -1,6 +1,20 @@
 import os
+
 import numpy as np
 import matplotlib.pyplot as plt
+from timm.scheduler import CosineLRScheduler
+
+from model.transformer import SpikingTransformer
+
+
+def create_scheduler(optimizer, config):
+    scheduler = CosineLRScheduler(optimizer, config.cycle_total, lr_min=1e-5, cycle_decay=config.cycle_decay, warmup_t=config.cycle_warmup)
+    return scheduler
+
+
+def create_model(device, config):
+    model = SpikingTransformer(in_channels=config.in_channels, image_size=config.image_size, num_classes=config.num_classes, num_layers=config.num_layers, num_heads=config.num_heads, num_channels=config.num_channels).to(device)
+    return model
 
 
 def reshape_image(image, repeat=None):

@@ -1,19 +1,11 @@
 defaults:
     - _self_
-    - dataset: cifar-10
-    - model: light
+    - experiment: cifar-10
     - override hydra/hydra_logging: none
     - override hydra/job_logging: none
 
 checkpoint: ./checkpoint/training_${now:%Y%m%d%H%M%S}
 device: gpu
-
-batch_size: 32
-num_workers: 16
-learning_rate: 0.0005
-
-num_epochs: 300
-save_interval: 30
 
 hydra:
     run:
