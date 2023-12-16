@@ -2,13 +2,34 @@ import os
 
 import numpy as np
 import matplotlib.pyplot as plt
-from timm.scheduler import CosineLRScheduler
+from torch.optim.lr_scheduler import LambdaLR
 
 from model.transformer import SpikingTransformer
 
 
+class CosineAnnealing(object):
+    def __init__(self, config):
+        self.learning_rate = config.learning_rate
+        self.lower_bound = config.lower_bound
+        self.cycle_total = config.cycle_total
+        self.cycle_warmup = config.cycle_warmup
+        self.cycle_decay = config.cycle_decay
+    
+    def __call__(self, epoch):
+        epoch %= self.cycle_total
+        if epoch <= self.cycle_warmup:
+            result = self.learning_rate * epoch / self.cycle_warmup
+        else:
+            result = 0.5 * self.learning_rate * (1 + np.cos((epoch - self.cycle_warmup) / (self.cycle_total - self.cycle_warmup) * np.pi))
+        result = max(result, self.lower_bound)
+        if epoch == 0:
+            self.learning_rate *= self.cycle_decay
+        return result
+
+
 def create_scheduler(optimizer, config):
-    scheduler = CosineLRScheduler(optimizer, config.cycle_total, lr_min=1e-5, cycle_decay=config.cycle_decay, warmup_t=config.cycle_warmup)
+    function = CosineAnnealing(config)
+    scheduler = LambdaLR(optimizer, function)
     return scheduler
 
 

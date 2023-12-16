@@ -68,7 +68,7 @@ def main(config):
             correct_train += (prediction.argmax(dim=1) == label).sum().item()
             functional.reset_net(model)
 
-        scheduler.step(epoch)
+        scheduler.step()
         loss_train /= len(dataset_train)
         accuracy_train = correct_train / len(dataset_train)
         time_train = time.time() - start_train
