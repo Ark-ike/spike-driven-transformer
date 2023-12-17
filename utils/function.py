@@ -9,21 +9,21 @@ from model.transformer import SpikingTransformer
 
 class CosineAnnealing(object):
     def __init__(self, config):
-        self.learning_rate = config.learning_rate
         self.lower_bound = config.lower_bound
         self.cycle_total = config.cycle_total
         self.cycle_warmup = config.cycle_warmup
         self.cycle_decay = config.cycle_decay
-    
+        self.discount_factor = 1
+
     def __call__(self, epoch):
         epoch %= self.cycle_total
         if epoch <= self.cycle_warmup:
-            result = self.learning_rate * epoch / self.cycle_warmup
+            result = self.discount_factor * epoch / self.cycle_warmup
         else:
-            result = 0.5 * self.learning_rate * (1 + np.cos((epoch - self.cycle_warmup) / (self.cycle_total - self.cycle_warmup) * np.pi))
+            result = self.discount_factor * 0.5 * (1 + np.cos((epoch - self.cycle_warmup) / (self.cycle_total - self.cycle_warmup) * np.pi))
         result = max(result, self.lower_bound)
         if epoch == 0:
-            self.learning_rate *= self.cycle_decay
+            self.discount_factor *= self.cycle_decay
         return result
 
 
