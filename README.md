@@ -54,7 +54,7 @@ Latest version is recommended for all the packages, but make sure that your CUDA
 The CIFAR-10 dataset is supported by `torchvision`, which can be automatically downloaded. Run the following command for experiments on the CIFAR-10 dataset:
 
 ```bash
-python training.py dataset=cifar-10 model=light
+python training.py experiment=cifar-10
 ```
 
 ### CIFAR-100
@@ -62,7 +62,7 @@ python training.py dataset=cifar-10 model=light
 The CIFAR-100 dataset is also supported by `torchvision`. Run the following command for experiments on the CIFAR-100 dataset:
 
 ```bash
-python training.py dataset=cifar-100 model=light
+python training.py experiment=cifar-100
 ```
 
 ### CIFAR-10-DVS
@@ -70,7 +70,7 @@ python training.py dataset=cifar-100 model=light
 The CIFAR-10-DVS dataset is loaded by `spikingjelly` and can be automatically downloaded. Run the following command for experiments on the CIFAR-10-DVS dataset:
 
 ```bash
-python training.py dataset=cifar-10-dvs model=light
+python training.py dataset=cifar-10-dvs
 ```
 
 Since neuromorphic datasets require larger time steps, a smaller batch size is recommended.
@@ -80,7 +80,7 @@ Since neuromorphic datasets require larger time steps, a smaller batch size is r
 The DVS-128-Gesture dataset is also loaded by `spikingjelly`, but you need to download the dataset manually. Run the following command for experiments on the DVS-128-Gesture dataset:
 
 ```bash
-python training.py dataset=dvs-128-gesture model=light
+python training.py dataset=dvs-128-gesture
 ```
 
 It is likely that `spikingjelly` will raise an error at the first time you run the experiment. Follow the instructions to download the dataset correctly and try again. Similarly, a smaller batch size is recommended.
