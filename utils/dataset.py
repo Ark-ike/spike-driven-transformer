@@ -47,7 +47,7 @@ def create_dataset(config):
         os.makedirs(config.path, exist_ok=True)
         dataset_train = DVS128Gesture(config.path, train=True, data_type='frame', frames_number=config.time_steps, split_by='number')
         dataset_test = DVS128Gesture(config.path, train=False, data_type='frame', frames_number=config.time_steps, split_by='number')
-    elif config.name == 'imagenet-1k':
+    elif config.name == 'imagenet-1k-128':
         transform_train = create_transform(config.image_size, train=True)
         transform_test = create_transform(config.image_size, train=False)
         dataset_train = ImageFolder(os.path.join(config.path, 'train'), transform=transform_train)

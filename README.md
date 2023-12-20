@@ -85,7 +85,7 @@ python training.py dataset=dvs-128-gesture
 
 It is likely that `spikingjelly` will raise an error at the first time you run the experiment. Follow the instructions to download the dataset correctly and try again. Similarly, a smaller batch size is recommended.
 
-### ImageNet-1k
+### ImageNet-1k-128
 
 The ImageNet-1k dataset is loaded by `torchvision`, but you should prepare the dataset manually. Run the following command to download and extract the dataset:
 
@@ -93,8 +93,14 @@ The ImageNet-1k dataset is loaded by `torchvision`, but you should prepare the d
 cd dataset && . ./imagenet-1k.sh
 ```
 
+Since resizing images is extremely time-consuming, we provide a script to process the dataset in advance. Run the following command to process the dataset:
+
+```bash
+cd dataset && python imagenet-1k-128.py
+```
+
 Then run the following command for experiments on the ImageNet-1k dataset:
 
 ```
-python training.py experiment=imagenet-1k
+python training.py experiment=imagenet-1k-128
 ```

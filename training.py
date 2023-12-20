@@ -3,6 +3,7 @@ import sys
 import time
 
 import hydra
+from tqdm import tqdm
 from omegaconf import OmegaConf
 
 import torch
@@ -54,7 +55,7 @@ def main(config):
         start_train = time.time()
         model.train()
 
-        for image, label in loader_train:
+        for image, label in tqdm(loader_train):
             image, label = image.to(device), label.to(device)
             image = reshape_image(image, experiment.time_steps)
 
@@ -80,7 +81,7 @@ def main(config):
         model.eval()
 
         with torch.no_grad():
-            for image, label in loader_test:
+            for image, label in tqdm(loader_test):
                 image, label = image.to(device), label.to(device)
                 image = reshape_image(image, experiment.time_steps)
 
