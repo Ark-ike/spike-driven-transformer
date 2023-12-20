@@ -12,7 +12,7 @@ num_channels: 512
 
 num_epochs: 300
 save_interval: 60
-batch_size: 128
+batch_size: 32
 num_workers: 0
 
 learning_rate: 5e-4
