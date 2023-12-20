@@ -1,5 +1,5 @@
-name: cifar-10
-path: ./dataset/cifar-10
+name: imagenet-1k
+path: ./dataset/imagenet-1k
 
 time_steps: 4
 in_channels: 3
