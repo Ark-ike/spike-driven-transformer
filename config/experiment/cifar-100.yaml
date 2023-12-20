@@ -6,14 +6,14 @@ in_channels: 3
 image_size: 32
 num_classes: 100
 
-num_layers: 2
+num_layers: 4
 num_heads: 8
 num_channels: 512
 
 num_epochs: 300
 save_interval: 60
 batch_size: 32
-num_workers: 16
+num_workers: 0
 
 learning_rate: 5e-4
 lower_bound: 1e-2

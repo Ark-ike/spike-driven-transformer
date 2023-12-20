@@ -3,16 +3,16 @@ path: ./dataset/cifar-10
 
 time_steps: 4
 in_channels: 3
-image_size: 32
-num_classes: 10
+image_size: 224
+num_classes: 1000
 
-num_layers: 4
+num_layers: 8
 num_heads: 8
 num_channels: 512
 
 num_epochs: 300
 save_interval: 60
-batch_size: 32
+batch_size: 128
 num_workers: 0
 
 learning_rate: 5e-4
