@@ -2,7 +2,10 @@ import os
 
 import numpy as np
 import matplotlib.pyplot as plt
+import torch
 from torch.optim.lr_scheduler import LambdaLR
+from einops.layers.torch import Reduce
+from spikingjelly.activation_based import layer, neuron
 
 from model.transformer import SpikingTransformer
 
@@ -35,6 +38,13 @@ def create_scheduler(optimizer, config):
 
 def create_model(device, config):
     model = SpikingTransformer(in_channels=config.in_channels, image_size=config.image_size, num_classes=config.num_classes, num_layers=config.num_layers, num_heads=config.num_heads, num_channels=config.num_channels).to(device)
+    return model
+
+
+def inherit_model(device, config):
+    model = SpikingTransformer(in_channels=config.in_channels, image_size=config.image_size, num_classes=config.old_classes, num_layers=config.num_layers, num_heads=config.num_heads, num_channels=config.num_channels).to(device)
+    model.load_state_dict(torch.load(config.model, map_location=device), strict=False)
+    model.classifier_head[2] = layer.Linear(config.num_channels, config.new_classes).to(device)
     return model
 
 

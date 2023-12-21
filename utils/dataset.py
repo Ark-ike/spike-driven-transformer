@@ -29,12 +29,12 @@ def split_dataset(dataset, train_ratio=0.9, num_classes=10):
 
 
 def create_dataset(config):
-    if config.name == 'cifar-10':
+    if config.name == 'cifar-10' or config.name == 'cifar-10-finetune':
         transform_train = create_transform(config.image_size, train=True)
         transform_test = create_transform(config.image_size, train=False)
         dataset_train = CIFAR10(config.path, train=True, transform=transform_train, download=True)
         dataset_test = CIFAR10(config.path, train=False, transform=transform_test, download=True)
-    elif config.name == 'cifar-100':
+    elif config.name == 'cifar-100' or config.name == 'cifar-100-finetune':
         transform_train = create_transform(config.image_size, train=True)
         transform_test = create_transform(config.image_size, train=False)
         dataset_train = CIFAR100(config.path, train=True, transform=transform_train, download=True)
