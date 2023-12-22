@@ -4,7 +4,7 @@ defaults:
     - override hydra/hydra_logging: none
     - override hydra/job_logging: none
 
-checkpoint: ./checkpoint/training_${now:%Y%m%d%H%M%S}
+checkpoint: ./checkpoint/finetune_${now:%Y%m%d%H%M%S}
 device: gpu
 
 hydra:
