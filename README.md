@@ -4,11 +4,11 @@ Reproduction of Paper: Spike-driven Transformer
 <p align="center">
     Project of AI3610 Brain-inspired Intelligence, 2023 Fall, SJTU
     <br />
-    <a href="https://github.com/Ark-ike"><strong>Yi Ai</strong></a>
-    &nbsp;
     <a href="https://github.com/xxyQwQ"><strong>Xiangyuan Xue</strong></a>
     &nbsp;
     <a href="https://github.com/YsmmsY"><strong>Shengmin Yang</strong></a>
+    &nbsp;
+    <a href="https://github.com/Ark-ike"><strong>Yi Ai</strong></a>
     <br />
 </p>
 
