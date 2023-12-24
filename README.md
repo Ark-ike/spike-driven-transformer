@@ -104,3 +104,19 @@ Then run the following command for experiments on the ImageNet-1k dataset:
 ```
 python training.py experiment=imagenet-1k-128
 ```
+
+### CIFAR-10-Finetune
+
+Before finetuning, you should first pretrain the model on the ImageNet-1k dataset. Then set the `model` argument to the path of the pretrained model in the configuration file. Run the following command for finetuning on the CIFAR-10 dataset:
+
+```bash
+python finetune.py experiment=cifar-10-finetune
+```
+
+### CIFAR-100-Finetune
+
+Similarly, you should set the `model` argument correctly in the configuration file. Run the following command for finetuning on the CIFAR-100 dataset:
+
+```bash
+python finetune.py experiment=cifar-100-finetune
+```
