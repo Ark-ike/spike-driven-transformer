@@ -21,7 +21,7 @@ This project reproduces the paper [Spike-driven Transformer](https://arxiv.org/a
 
 ![teaser](assets/teaser.png)
 
-## Requirements
+## 🛠️ Requirements
 
 To ensure the code runs correctly, following packages are required:
 
@@ -56,7 +56,7 @@ You can install them following the instructions below.
 
 Latest version is recommended for all the packages, but make sure that your CUDA version is compatible with your `pytorch`.
 
-## Experiments
+## 🚀 Experiments
 
 ### CIFAR-10
 
