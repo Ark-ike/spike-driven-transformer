@@ -13,8 +13,8 @@ Reproduction of Paper: Spike-driven Transformer
 </p>
 <p align="center">
     <a href="https://github.com/Ark-ike/spike-driven-transformer"> <img alt="Github Repository" src="https://img.shields.io/badge/Github-Repository-blue?logo=github&logoColor=blue"> </a>
-    <a href="assets/slides.pdf"> <img alt="Pre" src="https://img.shields.io/badge/Presentation-Slides-green?logo=googlenews&logoColor=green"> </a>
-    <a href='assets/report.pdf'> <img src='https://img.shields.io/badge/Project-Report-red?style=flat&logo=googlescholar&logoColor=red' alt='Project Report'> </a>
+    <a href="assets/slides.pdf"> <img alt="Presentation Slides" src="https://img.shields.io/badge/Presentation-Slides-green?logo=googlenews&logoColor=green"> </a>
+    <a href='assets/report.pdf'> <img alt='Project Report' src='https://img.shields.io/badge/Project-Report-red?style=flat&logo=googlescholar&logoColor=red'> </a>
 </p>
 
 This project reproduces the paper [Spike-driven Transformer](https://arxiv.org/abs/2307.01694). We simplify the implementation and introduce transfer learning. For training, CIFAR-10, CIFAR-100, CIFAR-10-DVS, DVS-128-Gesture and ImageNet-1k-128 are supported. For finetuning, CIFAR-10 and CIFAR-100 are supported.
